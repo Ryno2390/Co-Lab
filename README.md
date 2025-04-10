@@ -227,28 +227,28 @@ This section describes how the system incorporates new knowledge from IPFS over 
 
 ```mermaid
 graph TD
-    subgraph Data Layer
+    subgraph DataLayer ["Data Layer"]
         IPFS[(IPFS Network)] --> IndexerNode[Indexer Node]
         IndexerNode --> IndexDB[(Index Database)]
     end
 
-    subgraph Learning Cycle (Scheduled/Manual Trigger)
+    subgraph LearningCycle ["Learning Cycle (Scheduled/Manual Trigger)"]
         Trainer[Training Service] -- 1. Select Data --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
         Trainer -- 2. Get Base Model/Adapter --> ModelRegistry[(Central Model Registry)]
         ModelRegistry -- Base Checkpoint/Adapter --> Trainer
-        Trainer -- 3. Fine-Tune / PEFT --> UpdatedModel{Updated Model/Adapter}
+        Trainer -- 3. Fine-Tune / PEFT --> UpdatedModel{"Updated Model/Adapter"}
         Trainer -- 4. Run Validation --> ValidationSuite[Validation Benchmark Suite]
         ValidationSuite -- Pass/Fail --> Trainer
         Trainer -- 5. Upload if Passed --> ModelRegistry
     end
 
-    subgraph Deployment
+    subgraph Deployment ["Deployment"]
         ModelRegistry -- Notifies --> DeploymentService[Deployment Service]
         DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
     end
 
-    subgraph RAG Improvement (Continuous)
+    subgraph RAGImprovement ["RAG Improvement (Continuous)"]
         IndexerNode -- Improves Indexing --> IndexDB
         SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
     end
