@@ -228,12 +228,13 @@ This section describes how the system incorporates new knowledge from IPFS over 
 ```mermaid
 graph TD
     subgraph DataLayer ["Data Layer"]
+        direction TB %% Explicit direction
         IPFS[(IPFS Network)] --> IndexerNode[Indexer Node]
         IndexerNode --> IndexDB[(Index Database)]
     end
 
-    %% Added MORE <br> tags for extra vertical space before the title text
-    subgraph LearningCycle ["<br><br>Learning Cycle<br>(Scheduled/Manual Trigger)"]
+    subgraph LearningCycle ["<br>Learning Cycle<br>(Scheduled/Manual Trigger)"] %% Using slightly fewer <br> to test
+        direction TB %% Explicit direction for this subgraph
         Trainer[Training Service] -- "1. Select Data" --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
         Trainer -- "2. Get Base Model/Adapter" --> ModelRegistry[(Central Model Registry)]
@@ -245,12 +246,13 @@ graph TD
     end
 
     subgraph Deployment ["Deployment"]
+        direction TB %% Explicit direction
         ModelRegistry -- Notifies --> DeploymentService[Deployment Service]
         DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
     end
 
-    %% Added MORE <br> tags for extra vertical space before the title text
-    subgraph RAGImprovement ["<br><br>RAG Improvement<br>(Continuous)"]
+    subgraph RAGImprovement ["<br>RAG Improvement<br>(Continuous)"] %% Using slightly fewer <br> to test
+        direction TB %% Explicit direction for this subgraph
         IndexerNode -- Improves Indexing --> IndexDB
         SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
     end
