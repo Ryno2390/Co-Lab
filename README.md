@@ -233,14 +233,14 @@ graph TD
     end
 
     subgraph LearningCycle ["Learning Cycle (Scheduled/Manual Trigger)"]
-        Trainer[Training Service] -- 1. Select Data --> IndexDB
+        Trainer[Training Service] -- 1.Select Data --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
-        Trainer -- 2. Get Base Model/Adapter --> ModelRegistry[(Central Model Registry)]
+        Trainer -- 2.Get Base Model/Adapter --> ModelRegistry[(Central Model Registry)]
         ModelRegistry -- Base Checkpoint/Adapter --> Trainer
-        Trainer -- 3. Fine-Tune / PEFT --> UpdatedModel{"Updated Model/Adapter"}
-        Trainer -- 4. Run Validation --> ValidationSuite[Validation Benchmark Suite]
+        Trainer -- 3.Fine-Tune / PEFT --> UpdatedModel{"Updated Model/Adapter"}
+        Trainer -- 4.Run Validation --> ValidationSuite[Validation Benchmark Suite]
         ValidationSuite -- Pass/Fail --> Trainer
-        Trainer -- 5. Upload if Passed --> ModelRegistry
+        Trainer -- 5.Upload if Passed --> ModelRegistry
     end
 
     subgraph Deployment ["Deployment"]
