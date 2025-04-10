@@ -376,15 +376,15 @@ This section describes how Indexer Nodes are notified about new content added to
 
 ```mermaid
 graph LR
-    Uploader[Uploader Service] -- 1. Upload Confirmed (CID received) --> Uploader
-    Uploader -- 2. POST /announce (Payload: CID, Metadata) --> IndexerAnnounceEP[Indexer Node: /announce Endpoint]
-    IndexerAnnounceEP -- 3. Auth & Validate --> IndexerAnnounceEP
-    IndexerAnnounceEP -- 4. Add CID to Queue --> ProcessingQueue[(Internal Processing Queue)]
-    IndexerAnnounceEP -- 5. Return HTTP 202 Accepted --> Uploader
+    Uploader[Uploader Service] -- 1.Upload Confirmed (CID received) --> Uploader
+    Uploader -- 2.POST /announce (Payload: CID, Metadata) --> IndexerAnnounceEP[Indexer Node: /announce Endpoint]
+    IndexerAnnounceEP -- 3.Auth & Validate --> IndexerAnnounceEP
+    IndexerAnnounceEP -- 4.Add CID to Queue --> ProcessingQueue[(Internal Processing Queue)]
+    IndexerAnnounceEP -- 5.Return HTTP 202 Accepted --> Uploader
 
     subgraph Indexer Node Background Processing
-        Worker[Indexer Worker] -- 6. Dequeue CID --> ProcessingQueue
-        Worker -- 7. Process (Fetch, Embed, Index) --> IndexDB[(Index Database)]
+        Worker[Indexer Worker] -- 6.Dequeue CID --> ProcessingQueue
+        Worker -- 7.Process (Fetch, Embed, Index) --> IndexDB[(Index Database)]
     end
 ```
 
