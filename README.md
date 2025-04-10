@@ -76,15 +76,15 @@ graph TD
 
     subgraph Core AI Synthesis Stage
         direction TB
-        Gatherer[Gatherer] -- 1. Collects --> RawResponses["Raw Sub-AI Responses (Text, JSON, etc.)"]
+        Gatherer[Gatherer] -- 1.Collects --> RawResponses["Raw Sub-AI Responses (Text, JSON, etc.)"]
         RawResponses --> Preprocessor[Preprocessor]
-        Preprocessor -- 2. Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
+        Preprocessor -- 2.Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
         ProcessedResponses --> PromptBuilder[PromptBuilder]
-        PromptBuilder -- 3. Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (...)"]
+        PromptBuilder -- 3.Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (...)"]
         PromptBuilder --> SynthesizerLLM[("Synthesizer LLM (e.g., Claude 3 Sonnet, GPT-4)")]
-        SynthesizerLLM -- 4. Generates --> SynthesizedText["Synthesized Text Response"]
+        SynthesizerLLM -- 4.Generates --> SynthesizedText["Synthesized Text Response"]
         SynthesizedText --> Postprocessor[Postprocessor]
-        Postprocessor -- 5. Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
+        Postprocessor -- 5.Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
     end
 
     %% Connect external inputs to the subgraph node
