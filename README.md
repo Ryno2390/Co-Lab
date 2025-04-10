@@ -227,31 +227,47 @@ This section describes how the system incorporates new knowledge from IPFS over 
 
 ```mermaid
 graph TD
-    subgraph Data Layer
-        IPFS[(IPFS Network)] --> IndexerNode[Indexer Node]
-        IndexerNode --> IndexDB[(Index Database)]
+    %% === Nodes ===
+    User[User]
+    IPFSUploader[IPFS Uploader]
+    IPFS[(IPFS Network)]
+    Announcer[Announcement Service (e.g., Webhook)]
+    IndexerNode[Indexer Node(s)]
+    IndexDB[(Index DB e.g., ES + Pinecone)]
+    IndexerNodeAPI[Indexer Node API (REST/JSON)]
+    SubAI((Sub-AI))
+
+    %% === Upload Phase ===
+    User -- Uploads Data + Basic Metadata --> IPFSUploader
+    IPFSUploader -- 1. Stores on --> IPFS
+    IPFSUploader -- 2. Announces New CID + Metadata --> Announcer
+
+    %% === Indexing Phase ===
+    Announcer --> IndexerNode
+    IndexerNode -- 1. Retrieves Content (using CID) --> IPFS
+    IndexerNode -- 2. Processes Content (Embeddings, Keywords) --> IndexDB
+
+    %% === Query Phase ===
+    subgraph Sub-AI Querying
+        direction TB
+        SubAI -- 1. Needs Data for Task --> IndexerNodeAPI
+        IndexerNodeAPI -- 2. Forwards Query --> IndexerNode %% Connects to the IndexerNode defined outside
+        IndexerNode -- 3. Queries --> IndexDB %% Connects to the IndexDB defined outside
+        IndexDB -- 4. Returns Relevant CIDs/Snippets --> IndexerNode
+        IndexerNode -- 5. Returns CIDs/Snippets --> IndexerNodeAPI
+        IndexerNodeAPI -- 6. Returns CIDs/Snippets --> SubAI
+        SubAI -- 7. Retrieves Full Content (using CIDs) --> IPFS %% Connects to the IPFS defined outside
     end
 
-    subgraph Learning Cycle (Scheduled/Manual Trigger)
-        Trainer[Training Service] -- 1. Select Data --> IndexDB
-        IndexDB -- Relevant New Data --> Trainer
-        Trainer -- 2. Get Base Model/Adapter --> ModelRegistry[(Central Model Registry)]
-        ModelRegistry -- Base Checkpoint/Adapter --> Trainer
-        Trainer -- 3. Fine-Tune / PEFT --> UpdatedModel{Updated Model/Adapter}
-        Trainer -- 4. Run Validation --> ValidationSuite[Validation Benchmark Suite]
-        ValidationSuite -- Pass/Fail --> Trainer
-        Trainer -- 5. Upload if Passed --> ModelRegistry
-    end
+    %% Note: No extra connections needed outside the subgraph here.
+    %% Mermaid resolves connections like 'IndexerNodeAPI --> IndexerNode'
+    %% by finding the 'IndexerNode' defined in the main graph scope.
 
-    subgraph Deployment
-        ModelRegistry -- Notifies --> DeploymentService[Deployment Service]
-        DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
-    end
-
-    subgraph RAG Improvement (Continuous)
-        IndexerNode -- Improves Indexing --> IndexDB
-        SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
-    end
+    %% Optional Styling
+    style IPFS fill:#cde,stroke:#333
+    style IndexDB fill:#cde,stroke:#333
+    style IndexerNode fill:#f9f,stroke:#333
+    style SubAI fill:#fcf,stroke:#333
 ```
 
 ## 7. Initial Tokenomics Plan
