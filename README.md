@@ -376,7 +376,7 @@ This section describes how Indexer Nodes are notified about new content added to
 
 ```mermaid
 graph LR
-    Uploader[Uploader Service] -- "1. Upload Confirmed (CID received)" --> Uploader
+    Uploader[Uploader Service] -- "1.&nbsp;Upload Confirmed (CID received)" --> Uploader
     Uploader -- "2. POST /announce (Payload: CID, Metadata)" --> IndexerAnnounceEP[Indexer Node: /announce Endpoint]
     IndexerAnnounceEP -- "3. Auth & Validate" --> IndexerAnnounceEP
     IndexerAnnounceEP -- "4. Add CID to Queue" --> ProcessingQueue[(Internal Processing Queue)]
