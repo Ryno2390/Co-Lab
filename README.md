@@ -240,8 +240,8 @@ graph TD
         direction TB
         %% Add a small, visible spacer node (circle with a dot)
         LC_Pad((.)):::spacer
-        %% Connect spacer to the overlapping node
-        LC_Pad --> Trainer
+        %% Connect spacer to the overlapping node using a dotted line
+        LC_Pad --- Trainer
 
         %% Original nodes start here
         Trainer[Training Service] -- "1. Select Data" --> IndexDB
@@ -264,8 +264,8 @@ graph TD
         direction TB
         %% Add a small, visible spacer node (circle with a dot)
         RAG_Pad((.)):::spacer
-         %% Connect spacer to the overlapping node
-        RAG_Pad --> SubAI
+         %% Connect spacer to the overlapping node using a dotted line
+        RAG_Pad --- SubAI
 
         %% Original nodes start here
         IndexerNode -- Improves Indexing --> IndexDB
