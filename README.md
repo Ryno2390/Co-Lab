@@ -232,15 +232,17 @@ graph TD
         IndexerNode --> IndexDB[(Index Database)]
     end
 
-    subgraph LearningCycle ["Learning Cycle (Scheduled/Manual Trigger)"]
-        Trainer[Training Service] -- "1.&nbsp;Select Data" --> IndexDB
+    %% Added <br> to the title
+    subgraph LearningCycle ["Learning Cycle<br>(Scheduled/Manual Trigger)"]
+        Trainer[Training Service] -- "1. Select Data" --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
-        Trainer -- "2.&nbsp;Get Base Model/Adapter" --> ModelRegistry[(Central Model Registry)]
+        Trainer -- "2. Get Base Model/Adapter" --> ModelRegistry[(Central Model Registry)]
         ModelRegistry -- Base Checkpoint/Adapter --> Trainer
-        Trainer -- "3.&nbsp;Fine-Tune" / PEFT --> UpdatedModel{"Updated Model/Adapter"}
-        Trainer -- "4.&nbsp;Run Validation" --> ValidationSuite[Validation Benchmark Suite]
+        %% Corrected link text - assuming '/' was part of the text
+        Trainer -- "3. Fine-Tune / PEFT" --> UpdatedModel{"Updated Model/Adapter"}
+        Trainer -- "4. Run Validation" --> ValidationSuite[Validation Benchmark Suite]
         ValidationSuite -- Pass/Fail --> Trainer
-        Trainer -- "5.&nbsp;Upload if Passed" --> ModelRegistry
+        Trainer -- "5. Upload if Passed" --> ModelRegistry
     end
 
     subgraph Deployment ["Deployment"]
@@ -248,7 +250,8 @@ graph TD
         DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
     end
 
-    subgraph RAGImprovement ["RAG Improvement (Continuous)"]
+    %% Added <br> to the title
+    subgraph RAGImprovement ["RAG Improvement<br>(Continuous)"]
         IndexerNode -- Improves Indexing --> IndexDB
         SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
     end
