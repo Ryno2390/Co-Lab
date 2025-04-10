@@ -227,25 +227,20 @@ This section describes how the system incorporates new knowledge from IPFS over 
 
 ```mermaid
 graph TD
-    %% Define a class for invisible nodes/links
-    classDef invisible stroke-width:0,fill:transparent,color:transparent;
-    %% Define a class for invisible links specifically if needed
-    linkStyle default interpolate basis; %% Smoother lines generally
-    linkStyle 99 stroke-width:0; %% Style for invisible links (use index 99 or similar)
-
+    %% Define a class for invisible nodes
+    classDef invisible stroke-width:0px,fill:transparent,color:transparent,stroke:transparent;
 
     subgraph DataLayer ["Data Layer"]
         IPFS[(IPFS Network)] --> IndexerNode[Indexer Node]
         IndexerNode --> IndexDB[(Index Database)]
     end
 
-    subgraph LearningCycle ["Learning Cycle<br>(Scheduled/Manual Trigger)"] %% Keep the <br> for good measure
+    subgraph LearningCycle ["Learning Cycle<br>(Scheduled/Manual Trigger)"]
         %% Add invisible padding node
         LC_Pad(" ")
         class LC_Pad invisible
-        %% Connect pad to the overlapping node (Trainer) with an invisible link
-        LC_Pad --o --- Trainer  %% Using --- for straight invisible line, --o for circle connection point
-
+        %% Connect pad to the overlapping node (Trainer)
+        LC_Pad --> Trainer
 
         %% Original nodes start here
         Trainer[Training Service] -- "1. Select Data" --> IndexDB
@@ -263,24 +258,17 @@ graph TD
         DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
     end
 
-    subgraph RAGImprovement ["RAG Improvement<br>(Continuous)"] %% Keep the <br>
+    subgraph RAGImprovement ["RAG Improvement<br>(Continuous)"]
         %% Add invisible padding node
         RAG_Pad(" ")
         class RAG_Pad invisible
-         %% Connect pad to the overlapping node (SubAI) with an invisible link
-        RAG_Pad --o --- SubAI
-
+         %% Connect pad to the overlapping node (SubAI)
+        RAG_Pad --> SubAI
 
         %% Original nodes start here
         IndexerNode -- Improves Indexing --> IndexDB
         SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
     end
-
-    %% Apply invisible style to the links from padding nodes manually by index if needed
-    %% (Mermaid might automatically make the link nearly invisible if node is tiny,
-    %% but explicit styling is safer if needed - depends on renderer)
-    %% Find the link indices (usually sequential) and apply linkStyle
-    %% Example: linkStyle 0 stroke-width:0;  <- If LC_Pad-->Trainer is the first link defined
 ```
 
 ## 7. Initial Tokenomics Plan
