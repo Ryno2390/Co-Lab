@@ -227,22 +227,13 @@ This section describes how the system incorporates new knowledge from IPFS over 
 
 ```mermaid
 graph TD
-    %% Define a class for invisible nodes
-    classDef invisible stroke-width:0px,fill:transparent,color:transparent,stroke:transparent;
-
     subgraph DataLayer ["Data Layer"]
         IPFS[(IPFS Network)] --> IndexerNode[Indexer Node]
         IndexerNode --> IndexDB[(Index Database)]
     end
 
-    subgraph LearningCycle ["Learning Cycle<br>(Scheduled/Manual Trigger)"]
-        %% Add invisible padding node
-        LC_Pad(" ")
-        class LC_Pad invisible
-        %% Connect pad to the overlapping node (Trainer)
-        LC_Pad --> Trainer
-
-        %% Original nodes start here
+    %% Added MORE <br> tags for extra vertical space before the title text
+    subgraph LearningCycle ["<br><br>Learning Cycle<br>(Scheduled/Manual Trigger)"]
         Trainer[Training Service] -- "1. Select Data" --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
         Trainer -- "2. Get Base Model/Adapter" --> ModelRegistry[(Central Model Registry)]
@@ -258,14 +249,8 @@ graph TD
         DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
     end
 
-    subgraph RAGImprovement ["RAG Improvement<br>(Continuous)"]
-        %% Add invisible padding node
-        RAG_Pad(" ")
-        class RAG_Pad invisible
-         %% Connect pad to the overlapping node (SubAI)
-        RAG_Pad --> SubAI
-
-        %% Original nodes start here
+    %% Added MORE <br> tags for extra vertical space before the title text
+    subgraph RAGImprovement ["<br><br>RAG Improvement<br>(Continuous)"]
         IndexerNode -- Improves Indexing --> IndexDB
         SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
     end
