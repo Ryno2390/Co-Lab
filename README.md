@@ -70,23 +70,41 @@ This stage combines the results from Sub-AIs (both fixed and dynamic) into the f
 
 ```mermaid
 graph TD
+    %% Define external inputs first for clarity
+    OriginalPrompt[Original Prompt]
+    DecomposedSubTasks[Decomposed Sub-Tasks]
+
     subgraph Core AI Synthesis Stage
-        Gatherer -- 1.Collects --> RawResponses{Raw Sub-AI Responses (Text, JSON, etc.)}
-        Preprocessor -- 2.Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
-        PromptBuilder -- 3.Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (Original Prompt, Sub-Tasks, Processed Responses, Instructions)"]
-        PromptBuilder --> SynthesizerLLM[Synthesizer LLM (e.g., Claude 3 Sonnet, GPT-4)]
-        SynthesizerLLM -- 4.Generates --> SynthesizedText{Synthesized Text Response}
-        Postprocessor -- 5.Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
+        direction TB
+        Gatherer[Gatherer] -- 1. Collects --> RawResponses["Raw Sub-AI Responses (Text, JSON, etc.)"]
+        RawResponses --> Preprocessor[Preprocessor]
+        Preprocessor -- 2. Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
+        ProcessedResponses --> PromptBuilder[PromptBuilder]
+        PromptBuilder -- 3. Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (...)"]
+        PromptBuilder --> SynthesizerLLM[("Synthesizer LLM (e.g., Claude 3 Sonnet, GPT-4)")]
+        SynthesizerLLM -- 4. Generates --> SynthesizedText["Synthesized Text Response"]
+        SynthesizedText --> Postprocessor[Postprocessor]
+        Postprocessor -- 5. Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
     end
 
-    RawResponses --> Preprocessor
-    ProcessedResponses --> PromptBuilder
-    SynthesizedText --> Postprocessor
-    FinalResponse --> UI[User Interface]
-
-    %% Inputs to Prompt Builder
+    %% Connect external inputs to the subgraph node
     OriginalPrompt --> PromptBuilder
     DecomposedSubTasks --> PromptBuilder
+
+    %% Connect subgraph output to external node
+    FinalResponse --> UI[User Interface]
+
+    %% Optional: Style nodes if desired
+    style Gatherer fill:#f9f,stroke:#333,stroke-width:2px
+    style Preprocessor fill:#f9f,stroke:#333,stroke-width:2px
+    style PromptBuilder fill:#f9f,stroke:#333,stroke-width:2px
+    style SynthesizerLLM fill:#ccf,stroke:#333,stroke-width:2px
+    style Postprocessor fill:#f9f,stroke:#333,stroke-width:2px
+    style RawResponses fill:#lightgrey,stroke:#333
+    style ProcessedResponses fill:#lightgrey,stroke:#333
+    style SynthesizerPrompt fill:#lightgrey,stroke:#333
+    style SynthesizedText fill:#lightgrey,stroke:#333
+    style FinalResponse fill:#lightgrey,stroke:#333
 ```
 
 ## 4. Sub-AI Nature & Implementation
