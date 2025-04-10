@@ -227,15 +227,15 @@ This section describes how the system incorporates new knowledge from IPFS over 
 
 ```mermaid
 graph TD
-    %% === Nodes ===
+    %% === Nodes (Labels with special characters quoted) ===
     User[User]
     IPFSUploader[IPFS Uploader]
-    IPFS[(IPFS Network)]
-    Announcer[Announcement Service (e.g., Webhook)]
-    IndexerNode[Indexer Node(s)]
-    IndexDB[(Index DB e.g., ES + Pinecone)]
-    IndexerNodeAPI[Indexer Node API (REST/JSON)]
-    SubAI((Sub-AI))
+    IPFS[("IPFS Network")] %% Use quotes inside the shape definition for label
+    Announcer["Announcement Service (e.g., Webhook)"] %% Quoted label
+    IndexerNode["Indexer Node(s)"] %% Quoted label
+    IndexDB[("Index DB e.g., ES + Pinecone")] %% Use quotes inside the shape definition for label
+    IndexerNodeAPI["Indexer Node API (REST/JSON)"] %% Quoted label
+    SubAI((Sub-AI)) %% Simple label, quotes usually not needed but ("Sub-AI") is safer
 
     %% === Upload Phase ===
     User -- Uploads Data + Basic Metadata --> IPFSUploader
@@ -251,17 +251,13 @@ graph TD
     subgraph Sub-AI Querying
         direction TB
         SubAI -- 1. Needs Data for Task --> IndexerNodeAPI
-        IndexerNodeAPI -- 2. Forwards Query --> IndexerNode %% Connects to the IndexerNode defined outside
-        IndexerNode -- 3. Queries --> IndexDB %% Connects to the IndexDB defined outside
+        IndexerNodeAPI -- 2. Forwards Query --> IndexerNode
+        IndexerNode -- 3. Queries --> IndexDB
         IndexDB -- 4. Returns Relevant CIDs/Snippets --> IndexerNode
         IndexerNode -- 5. Returns CIDs/Snippets --> IndexerNodeAPI
         IndexerNodeAPI -- 6. Returns CIDs/Snippets --> SubAI
-        SubAI -- 7. Retrieves Full Content (using CIDs) --> IPFS %% Connects to the IPFS defined outside
+        SubAI -- 7. Retrieves Full Content (using CIDs) --> IPFS
     end
-
-    %% Note: No extra connections needed outside the subgraph here.
-    %% Mermaid resolves connections like 'IndexerNodeAPI --> IndexerNode'
-    %% by finding the 'IndexerNode' defined in the main graph scope.
 
     %% Optional Styling
     style IPFS fill:#cde,stroke:#333
