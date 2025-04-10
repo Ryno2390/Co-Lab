@@ -76,15 +76,15 @@ graph TD
 
     subgraph Core AI Synthesis Stage
         direction TB
-        Gatherer[Gatherer] -- 1.Collects --> RawResponses["Raw Sub-AI Responses (Text, JSON, etc.)"]
+        Gatherer[Gatherer] -- "1.&nbsp;Collects" --> RawResponses["Raw Sub-AI Responses (Text, JSON, etc.)"]
         RawResponses --> Preprocessor[Preprocessor]
-        Preprocessor -- 2.Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
+        Preprocessor -- "2.&nbsp;Standardizes & Tags" --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
         ProcessedResponses --> PromptBuilder[PromptBuilder]
-        PromptBuilder -- 3.Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (...)"]
+        PromptBuilder -- "3.&nbsp;Constructs" --> SynthesizerPrompt["Detailed Synthesizer Prompt (...)"]
         PromptBuilder --> SynthesizerLLM[("Synthesizer LLM (e.g., Claude 3 Sonnet, GPT-4)")]
-        SynthesizerLLM -- 4.Generates --> SynthesizedText["Synthesized Text Response"]
+        SynthesizerLLM -- "4.&nbsp;Generates" --> SynthesizedText["Synthesized Text Response"]
         SynthesizedText --> Postprocessor[Postprocessor]
-        Postprocessor -- 5.Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
+        Postprocessor -- "5.&nbsp;Optional Formatting/Attribution" --> FinalResponse[Final Formatted Response]
     end
 
     %% Connect external inputs to the subgraph node
@@ -233,14 +233,14 @@ graph TD
     end
 
     subgraph LearningCycle ["Learning Cycle (Scheduled/Manual Trigger)"]
-        Trainer[Training Service] -- 1.Select Data --> IndexDB
+        Trainer[Training Service] -- "1.&nbsp;Select Data" --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
-        Trainer -- 2.Get Base Model/Adapter --> ModelRegistry[(Central Model Registry)]
+        Trainer -- "2.&nbsp;Get Base Model/Adapter" --> ModelRegistry[(Central Model Registry)]
         ModelRegistry -- Base Checkpoint/Adapter --> Trainer
-        Trainer -- 3.Fine-Tune / PEFT --> UpdatedModel{"Updated Model/Adapter"}
-        Trainer -- 4.Run Validation --> ValidationSuite[Validation Benchmark Suite]
+        Trainer -- "3.&nbsp;Fine-Tune" / PEFT --> UpdatedModel{"Updated Model/Adapter"}
+        Trainer -- "4.&nbsp;Run Validation" --> ValidationSuite[Validation Benchmark Suite]
         ValidationSuite -- Pass/Fail --> Trainer
-        Trainer -- 5.Upload if Passed --> ModelRegistry
+        Trainer -- "5.&nbsp;Upload if Passed" --> ModelRegistry
     end
 
     subgraph Deployment ["Deployment"]
@@ -274,17 +274,17 @@ This section outlines the initial approach to the Co-Lab token system for incent
 
 ```mermaid
 graph TD
-    User -- 1.Submits Prompt --> CoreAI[Core AI]
-    CoreAI -- 2.Calculates Cost --> PricingModule{Pricing Module}
-    PricingModule -- 3.Cost --> CentralLedger[(Centralized Ledger DB)]
-    CentralLedger -- 4.Check Balance & Deduct Tokens --> UserBalance{User Balance}
+    User -- 1.&nbsp;Submits Prompt --> CoreAI[Core AI]
+    CoreAI -- 2.&nbsp;Calculates Cost --> PricingModule{Pricing Module}
+    PricingModule -- 3.&nbsp;Cost --> CentralLedger[(Centralized Ledger DB)]
+    CentralLedger -- 4.&nbsp;Check Balance & Deduct Tokens --> UserBalance{User Balance}
     UserBalance -- Sufficient Funds --> CoreAI
 
-    User -- 5.Uploads Data --> IPFSUploader
+    User -- 5.&nbsp;Uploads Data --> IPFSUploader
     IPFSUploader -- Data + Metadata --> QualityCheck{Basic Quality Check}
     QualityCheck -- Passed --> RewardCalc{Reward Calculator}
     RewardCalc -- Reward Amount --> CentralLedger
-    CentralLedger -- 6.Credit Tokens --> UserBalance
+    CentralLedger -- 6.&nbsp;Credit Tokens --> UserBalance
 
     %% Future Decentralized Components (Dashed)
     style CentralLedger fill:#f9f,stroke:#333,stroke-width:2px
@@ -377,14 +377,14 @@ This section describes how Indexer Nodes are notified about new content added to
 ```mermaid
 graph LR
     Uploader[Uploader Service] -- "1.&nbsp;Upload Confirmed (CID received)" --> Uploader
-    Uploader -- "2. POST /announce (Payload: CID, Metadata)" --> IndexerAnnounceEP[Indexer Node: /announce Endpoint]
-    IndexerAnnounceEP -- "3. Auth & Validate" --> IndexerAnnounceEP
-    IndexerAnnounceEP -- "4. Add CID to Queue" --> ProcessingQueue[(Internal Processing Queue)]
-    IndexerAnnounceEP -- "5. Return HTTP 202 Accepted" --> Uploader
+    Uploader -- "2.&nbsp;POST /announce (Payload: CID, Metadata)" --> IndexerAnnounceEP[Indexer Node: /announce Endpoint]
+    IndexerAnnounceEP -- "3.&nbsp;Auth & Validate" --> IndexerAnnounceEP
+    IndexerAnnounceEP -- "4.&nbsp;Add CID to Queue" --> ProcessingQueue[(Internal Processing Queue)]
+    IndexerAnnounceEP -- "5.&nbsp;Return HTTP 202 Accepted" --> Uploader
 
     subgraph Indexer Node Background Processing
-        Worker[Indexer Worker] -- "6. Dequeue CID" --> ProcessingQueue
-        Worker -- "7. Process (Fetch, Embed, Index)" --> IndexDB[(Index Database)]
+        Worker[Indexer Worker] -- "6.&nbsp;Dequeue CID" --> ProcessingQueue
+        Worker -- "7.&nbsp;Process (Fetch, Embed, Index)" --> IndexDB[(Index Database)]
     end
 ```
 
