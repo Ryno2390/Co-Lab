@@ -188,35 +188,35 @@ This section outlines how Sub-AIs find relevant information stored on IPFS.
 
 ```mermaid
 graph TD
-    %% === Explicit Node Definitions First ===
+    %% === Explicit Node Definitions First (Single word labels for problem nodes) ===
     User[User]
     IPFSUploader[IPFS Uploader]
-    MyIPFS[IPFS Network] %% Renamed IPFS. No quotes needed as no special chars/parens.
-    Announcer["Announcement Service eg Webhook"] %% Quotes needed for spaces.
-    IndexerNode["Indexer Nodes Centralized"] %% Quotes needed for spaces.
-    MyIndexDB[Index DBs] %% Renamed IndexDB. Simple label.
-    IndexerNodeAPI["Indexer Node API REST JSON"] %% Quotes needed for spaces.
+    MyIPFS[IPFSNetwork] %% Single word label, no quotes, no spaces
+    Announcer["Announcement Service eg Webhook"]
+    IndexerNode["Indexer Nodes Centralized"]
+    MyIndexDB[IndexDBs] %% Single word label, no quotes, no spaces
+    IndexerNodeAPI["Indexer Node API REST JSON"]
     SubAI((Sub-AI))
 
     %% === Links ===
     User -- Uploads Data + Basic Metadata --> IPFSUploader
-    IPFSUploader -- Stores on --> MyIPFS %% Use new name
+    IPFSUploader -- Stores on --> MyIPFS
     IPFSUploader -- Announces New CID + Metadata --> Announcer
 
     Announcer --> IndexerNode
-    IndexerNode -- Retrieves Content from CID --> MyIPFS %% Use new name
-    IndexerNode -- Processes Content Embeddings Keywords --> MyIndexDB %% Use new name
+    IndexerNode -- Retrieves Content from CID --> MyIPFS
+    IndexerNode -- Processes Content Embeddings Keywords --> MyIndexDB
 
     %% === Subgraph Definition & Links ===
     subgraph Sub-AI Querying
         direction TB
         SubAI -- Needs Data for Task --> IndexerNodeAPI
         IndexerNodeAPI -- Forwards Query --> IndexerNode
-        IndexerNode -- Queries --> MyIndexDB %% Use new name
-        MyIndexDB -- Returns Relevant CIDs Snippets --> IndexerNode %% Use new name
+        IndexerNode -- Queries --> MyIndexDB
+        MyIndexDB -- Returns Relevant CIDs Snippets --> IndexerNode
         IndexerNode -- Returns CIDs Snippets --> IndexerNodeAPI
         IndexerNodeAPI -- Returns CIDs Snippets --> SubAI
-        SubAI -- Retrieves Content from CIDs --> MyIPFS %% Use new name
+        SubAI -- Retrieves Content from CIDs --> MyIPFS
     end
 ```
 
