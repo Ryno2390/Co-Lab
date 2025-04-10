@@ -71,12 +71,12 @@ This stage combines the results from Sub-AIs (both fixed and dynamic) into the f
 ```mermaid
 graph TD
     subgraph Core AI Synthesis Stage
-        Gatherer -- 1. Collects --> RawResponses{Raw Sub-AI Responses (Text, JSON, etc.)}
-        Preprocessor -- 2. Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
-        PromptBuilder -- 3. Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (Original Prompt, Sub-Tasks, Processed Responses, Instructions)"]
+        Gatherer -- 1.Collects --> RawResponses{Raw Sub-AI Responses (Text, JSON, etc.)}
+        Preprocessor -- 2.Standardizes & Tags --> ProcessedResponses["Processed Responses (Text + Source Tags)"]
+        PromptBuilder -- 3.Constructs --> SynthesizerPrompt["Detailed Synthesizer Prompt (Original Prompt, Sub-Tasks, Processed Responses, Instructions)"]
         PromptBuilder --> SynthesizerLLM[Synthesizer LLM (e.g., Claude 3 Sonnet, GPT-4)]
-        SynthesizerLLM -- 4. Generates --> SynthesizedText{Synthesized Text Response}
-        Postprocessor -- 5. Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
+        SynthesizerLLM -- 4.Generates --> SynthesizedText{Synthesized Text Response}
+        Postprocessor -- 5.Optional Formatting/Attribution --> FinalResponse[Final Formatted Response]
     end
 
     RawResponses --> Preprocessor
