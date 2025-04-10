@@ -292,9 +292,9 @@ graph TD
     style Staking fill:#ccf,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
     style Proofs fill:#ccf,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
 
-    CentralLedger -.-> BlockchainLedger[Blockchain Ledger (Future)]
-    UserBalance -.-> Staking[Staking/Slashing (Future)]
-    IPFSUploader -.-> Proofs[Proof Systems (Future)]
+    CentralLedger -.-> BlockchainLedger["Blockchain Ledger (Future)"]
+    UserBalance -.-> Staking["Staking/Slashing (Future)"]
+    IPFSUploader -.-> Proofs["Proof Systems (Future)"]
 ```
 
 ### 7.1 Query Pricing Model (V1)
