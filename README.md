@@ -227,17 +227,23 @@ This section describes how the system incorporates new knowledge from IPFS over 
 
 ```mermaid
 graph TD
+    %% Define a class for small spacer nodes (optional, can just use shape)
+    classDef spacer fill:#eee,stroke:#ccc,stroke-width:1px,color:transparent; %% Make it subtle
+
     subgraph DataLayer ["Data Layer"]
-        %% Explicit direction
         direction TB
         IPFS[(IPFS Network)] --> IndexerNode[Indexer Node]
         IndexerNode --> IndexDB[(Index Database)]
     end
 
     subgraph LearningCycle ["<br>Learning Cycle<br>(Scheduled/Manual Trigger)"]
-        %% Using slightly fewer <br> to test
-        %% Explicit direction for this subgraph
         direction TB
+        %% Add a small, visible spacer node (circle with a dot)
+        LC_Pad((.)):::spacer %% Double parentheses for circle, '.' inside, assign class
+        %% Connect spacer to the overlapping node
+        LC_Pad --> Trainer
+
+        %% Original nodes start here
         Trainer[Training Service] -- "1. Select Data" --> IndexDB
         IndexDB -- Relevant New Data --> Trainer
         Trainer -- "2. Get Base Model/Adapter" --> ModelRegistry[(Central Model Registry)]
@@ -249,16 +255,19 @@ graph TD
     end
 
     subgraph Deployment ["Deployment"]
-        %% Explicit direction
         direction TB
         ModelRegistry -- Notifies --> DeploymentService[Deployment Service]
         DeploymentService -- Deploys Updated Model/Adapter --> SubAIServingInfra[Sub-AI Serving Infrastructure]
     end
 
     subgraph RAGImprovement ["<br>RAG Improvement<br>(Continuous)"]
-        %% Using slightly fewer <br> to test
-        %% Explicit direction for this subgraph
         direction TB
+        %% Add a small, visible spacer node (circle with a dot)
+        RAG_Pad((.)):::spacer %% Double parentheses for circle, '.' inside, assign class
+         %% Connect spacer to the overlapping node
+        RAG_Pad --> SubAI
+
+        %% Original nodes start here
         IndexerNode -- Improves Indexing --> IndexDB
         SubAI((Sub-AI during query)) -- Retrieves Better Context --> IndexDB
     end
