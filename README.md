@@ -188,15 +188,15 @@ This section outlines how Sub-AIs find relevant information stored on IPFS.
 
 ```mermaid
 graph TD
-    %% === Nodes (Parentheses removed, quotes used only for spaces) ===
+    %% === Nodes (Cylinders replaced with Rectangles, labels quoted) ===
     User[User]
     IPFSUploader[IPFS Uploader]
-    IPFS[(IPFS Network)] %% Cylinder shape [( )]. Label has space, BUT let's try WITHOUT quotes first for [( )] shape, as [("...")] failed.
-    Announcer["Announcement Service eg Webhook"] %% Rectangle [ ]. Label has spaces -> quotes needed. Parens removed.
-    IndexerNode["Indexer Nodes Centralized"] %% Rectangle [ ]. Label has spaces -> quotes needed. Parens removed.
-    IndexDB[(Index DBs eg ES Pinecone)] %% Cylinder shape [( )]. Label has spaces -> try WITHOUT quotes first. Parens removed.
-    IndexerNodeAPI["Indexer Node API REST JSON"] %% Rectangle [ ]. Label has spaces -> quotes needed. Parens removed.
-    SubAI((Sub-AI)) %% Double circle (()). Simple label -> no quotes needed.
+    IPFS["IPFS Network"] %% Changed from [( )] to [ ] and quoted label
+    Announcer["Announcement Service eg Webhook"] %% Kept as rectangle, quoted label
+    IndexerNode["Indexer Nodes Centralized"] %% Kept as rectangle, quoted label
+    IndexDB["Index DBs eg ES Pinecone"] %% Changed from [( )] to [ ] and quoted label
+    IndexerNodeAPI["Indexer Node API REST JSON"] %% Kept as rectangle, quoted label
+    SubAI((Sub-AI)) %% Kept as double circle
 
     %% === Main Flow ===
     User -- Uploads Data + Basic Metadata --> IPFSUploader
@@ -205,7 +205,7 @@ graph TD
 
     Announcer --> IndexerNode
     IndexerNode -- Retrieves Content from CID --> IPFS
-    IndexerNode -- Processes Content Embeddings Keywords --> IndexDB %% Removed parens from link label too
+    IndexerNode -- Processes Content Embeddings Keywords --> IndexDB
 
     %% === Subgraph ===
     subgraph Sub-AI Querying
@@ -213,11 +213,15 @@ graph TD
         SubAI -- Needs Data for Task --> IndexerNodeAPI
         IndexerNodeAPI -- Forwards Query --> IndexerNode
         IndexerNode -- Queries --> IndexDB
-        IndexDB -- Returns Relevant CIDs Snippets --> IndexerNode %% Removed slash
-        IndexerNode -- Returns CIDs Snippets --> IndexerNodeAPI %% Removed slash
-        IndexerNodeAPI -- Returns CIDs Snippets --> SubAI %% Removed slash
+        IndexDB -- Returns Relevant CIDs Snippets --> IndexerNode
+        IndexerNode -- Returns CIDs Snippets --> IndexerNodeAPI
+        IndexerNodeAPI -- Returns CIDs Snippets --> SubAI
         SubAI -- Retrieves Content from CIDs --> IPFS
     end
+
+    %% Optional Styling (If you want to make rectangles look more like DBs)
+    classDef db fill:#cde,stroke:#333,stroke-width:1px,rx:5,ry:5 %% Style for rounded rectangle
+    class IPFS,IndexDB db %% Apply the style
 ```
 
 ## 6. Continuous Learning/Updating Mechanism
