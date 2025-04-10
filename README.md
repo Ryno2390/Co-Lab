@@ -239,7 +239,7 @@ graph TD
     subgraph LearningCycle ["<br>Learning Cycle<br>(Scheduled/Manual Trigger)"]
         direction TB
         %% Add a small, visible spacer node (circle with a dot)
-        LC_Pad((.)):::spacer %% Double parentheses for circle, '.' inside, assign class
+        LC_Pad((.)):::spacer
         %% Connect spacer to the overlapping node
         LC_Pad --> Trainer
 
@@ -263,7 +263,7 @@ graph TD
     subgraph RAGImprovement ["<br>RAG Improvement<br>(Continuous)"]
         direction TB
         %% Add a small, visible spacer node (circle with a dot)
-        RAG_Pad((.)):::spacer %% Double parentheses for circle, '.' inside, assign class
+        RAG_Pad((.)):::spacer
          %% Connect spacer to the overlapping node
         RAG_Pad --> SubAI
 
