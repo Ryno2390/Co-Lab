@@ -188,40 +188,36 @@ This section outlines how Sub-AIs find relevant information stored on IPFS.
 
 ```mermaid
 graph TD
-    %% === Nodes (Cylinders replaced with Rectangles, labels quoted) ===
+    %% === Explicit Node Definitions First ===
     User[User]
     IPFSUploader[IPFS Uploader]
-    IPFS["IPFS Network"] %% Changed from [( )] to [ ] and quoted label
-    Announcer["Announcement Service eg Webhook"] %% Kept as rectangle, quoted label
-    IndexerNode["Indexer Nodes Centralized"] %% Kept as rectangle, quoted label
-    IndexDB["Index DBs eg ES Pinecone"] %% Changed from [( )] to [ ] and quoted label
-    IndexerNodeAPI["Indexer Node API REST JSON"] %% Kept as rectangle, quoted label
-    SubAI((Sub-AI)) %% Kept as double circle
+    MyIPFS[IPFS Network] %% Renamed IPFS. No quotes needed as no special chars/parens.
+    Announcer["Announcement Service eg Webhook"] %% Quotes needed for spaces.
+    IndexerNode["Indexer Nodes Centralized"] %% Quotes needed for spaces.
+    MyIndexDB[Index DBs] %% Renamed IndexDB. Simple label.
+    IndexerNodeAPI["Indexer Node API REST JSON"] %% Quotes needed for spaces.
+    SubAI((Sub-AI))
 
-    %% === Main Flow ===
+    %% === Links ===
     User -- Uploads Data + Basic Metadata --> IPFSUploader
-    IPFSUploader -- Stores on --> IPFS
+    IPFSUploader -- Stores on --> MyIPFS %% Use new name
     IPFSUploader -- Announces New CID + Metadata --> Announcer
 
     Announcer --> IndexerNode
-    IndexerNode -- Retrieves Content from CID --> IPFS
-    IndexerNode -- Processes Content Embeddings Keywords --> IndexDB
+    IndexerNode -- Retrieves Content from CID --> MyIPFS %% Use new name
+    IndexerNode -- Processes Content Embeddings Keywords --> MyIndexDB %% Use new name
 
-    %% === Subgraph ===
+    %% === Subgraph Definition & Links ===
     subgraph Sub-AI Querying
         direction TB
         SubAI -- Needs Data for Task --> IndexerNodeAPI
         IndexerNodeAPI -- Forwards Query --> IndexerNode
-        IndexerNode -- Queries --> IndexDB
-        IndexDB -- Returns Relevant CIDs Snippets --> IndexerNode
+        IndexerNode -- Queries --> MyIndexDB %% Use new name
+        MyIndexDB -- Returns Relevant CIDs Snippets --> IndexerNode %% Use new name
         IndexerNode -- Returns CIDs Snippets --> IndexerNodeAPI
         IndexerNodeAPI -- Returns CIDs Snippets --> SubAI
-        SubAI -- Retrieves Content from CIDs --> IPFS
+        SubAI -- Retrieves Content from CIDs --> MyIPFS %% Use new name
     end
-
-    %% Optional Styling (If you want to make rectangles look more like DBs)
-    classDef db fill:#cde,stroke:#333,stroke-width:1px,rx:5,ry:5 %% Style for rounded rectangle
-    class IPFS,IndexDB db %% Apply the style
 ```
 
 ## 6. Continuous Learning/Updating Mechanism
