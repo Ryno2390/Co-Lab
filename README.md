@@ -188,16 +188,29 @@ This section outlines how Sub-AIs find relevant information stored on IPFS.
 
 ```mermaid
 graph TD
+    %% === Node Definitions (with quoted labels for special characters) ===
+    User[User]
+    IPFSUploader[IPFS Uploader]
+    IPFS(["IPFS Network"]) %% Use quotes inside the cylinder shape definition
+    Announcer["Announcement Service (e.g., Webhook)"] %% Quoted label
+    IndexerNode["Indexer Node(s) (Centralized)"] %% Quoted label
+    IndexDB(["Index DB(s) e.g., ES + Pinecone"]) %% Use quotes inside the cylinder shape definition
+    IndexerNodeAPI["Indexer Node API (REST/JSON)"] %% Quoted label
+    SubAI((Sub-AI)) %% Simple label, quotes not strictly needed but ("Sub-AI") is safer
+
+    %% === Main Flow ===
     User -- Uploads Data + Basic Metadata --> IPFSUploader
-    IPFSUploader -- Stores on --> IPFS[(IPFS Network)]
-    IPFSUploader -- Announces New CID + Metadata --> Announcer[Announcement Service (e.g., Webhook)]
+    IPFSUploader -- Stores on --> IPFS
+    IPFSUploader -- Announces New CID + Metadata --> Announcer
 
-    Announcer --> IndexerNode[Indexer Node(s) (Centralized)]
+    Announcer --> IndexerNode
     IndexerNode -- Retrieves Content from CID --> IPFS
-    IndexerNode -- Processes Content (Embeddings, Keywords) --> IndexDB[(Index DB(s) e.g., ES + Pinecone)]
+    IndexerNode -- Processes Content (Embeddings, Keywords) --> IndexDB
 
+    %% === Subgraph ===
     subgraph Sub-AI Querying
-        SubAI((Sub-AI)) -- Needs Data for Task --> IndexerNodeAPI[Indexer Node API (REST/JSON)]
+        direction TB %% Optional: Enforce direction within subgraph
+        SubAI -- Needs Data for Task --> IndexerNodeAPI
         IndexerNodeAPI -- Forwards Query --> IndexerNode
         IndexerNode -- Queries --> IndexDB
         IndexDB -- Returns Relevant CIDs/Snippets --> IndexerNode
