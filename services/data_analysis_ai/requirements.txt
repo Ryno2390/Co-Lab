@@ -1,0 +1,27 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation
+pydantic
+
+# Data Handling
+pandas
+tabulate # Required by pandas .to_markdown()
+
+# Decentralized Storage Clients (for fetching data)
+ipfshttpclient
+
+# Environment variable loading (if service-specific config needed)
+python-dotenv
+
+# LLM Client (Used by analysis logic)
+openai
+# anthropic # Add if using Claude
+
+# NOTE: This service also depends on shared modules from the parent Co-Lab project
+# (e.g., data_layer.ipfs_client, config.settings). Ensure the execution environment
+# makes these modules importable (e.g., running from the project root, using a
+# monorepo tool, or packaging the shared modules).

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Lab Mockup</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Co-Lab</h1>
+        <nav>
+            <button id="nav-chat" class="active">Chat</button>
+            <button id="nav-upload">Upload Data</button>
+            <button id="nav-wallet">Wallet</button>
+        </nav>
+        <div class="token-balance">
+            Balance: <span id="balance-amount">123.45</span> COLAB
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Content will be loaded here based on navigation -->
+        <section id="chat-view" class="view active-view">
+            <h2>Chat Interaction</h2>
+            <div class="chat-history">
+                <p><i>Chat history will appear here...</i></p>
+                <!-- Example Messages -->
+                <div class="message user-message">
+                    <p>Tell me about decentralized AI.</p>
+                </div>
+                <div class="message ai-message">
+                    <p>Decentralized AI refers to...</p>
+                    <pre><code>// Example code block
+function hello() { console.log("Hello!"); }</code></pre>
+                </div>
+                 <div class="message status-message">
+                    <p><i>Processing... Contacting IPFSSearchAI...</i></p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <textarea id="prompt-input" placeholder="Enter your prompt here..."></textarea>
+                <button id="submit-prompt">Send</button>
+                <div class="cost-estimate">Est. Cost: <span id="estimated-cost">~5.5</span> COLAB</div>
+            </div>
+        </section>
+
+        <section id="upload-view" class="view">
+            <h2>Upload Data</h2>
+            <p><i>Upload form will appear here...</i></p>
+             <!-- Placeholder for upload form -->
+             <div>
+                <label for="file-upload">Choose file:</label>
+                <input type="file" id="file-upload" name="file-upload"><br><br>
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description" rows="3" cols="50" placeholder="Required: Describe the content..."></textarea><br><br>
+                <label for="tags">Tags (comma-separated):</label><br>
+                <input type="text" id="tags" name="tags" size="50" placeholder="Required: e.g., ai, research, python"><br><br>
+                <button id="submit-upload">Upload to IPFS</button>
+                <div class="upload-status">
+                    <p><i>Upload status and confirmation will appear here...</i></p>
+                </div>
+             </div>
+        </section>
+
+        <section id="wallet-view" class="view">
+            <h2>Token Wallet</h2>
+            <p>Current Balance: <strong id="wallet-balance-amount">123.45</strong> COLAB</p>
+            <h3>Transaction History</h3>
+            <ul class="transaction-list">
+                <li>[Timestamp] Query Cost: -5.5 COLAB (Prompt: "Tell me...")</li>
+                <li>[Timestamp] Data Reward: +1.2 COLAB (CID: bafy...)</li>
+                <li>...</li>
+            </ul>
+             <!-- Placeholder for transaction history -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Co-Lab</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

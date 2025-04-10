@@ -1,0 +1,24 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation
+pydantic
+
+# LLM Client (Example: OpenAI)
+openai
+# anthropic # Add if using Claude
+
+# Environment variable loading (for API keys, etc.)
+python-dotenv
+
+# Potentially needed later if fetching context directly:
+# ipfshttpclient
+# httpx
+
+# NOTE: This service also depends on shared modules from the parent Co-Lab project
+# (e.g., data_layer clients, config.settings). Ensure the execution environment
+# makes these modules importable (e.g., running from the project root, using a
+# monorepo tool, or packaging the shared modules).

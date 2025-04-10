@@ -1,0 +1,25 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation
+pydantic
+
+# LLM Client (Example: OpenAI)
+openai
+# anthropic # Add if using Claude
+
+# HTTP Client (Needed by the imported data_layer.indexer_client)
+httpx
+
+# Environment variable loading (for API keys, etc.)
+python-dotenv
+
+# NOTE: This service also depends on shared modules from the parent Co-Lab project
+# (e.g., data_layer.indexer_client, config.settings). Ensure the execution environment
+# makes these modules importable (e.g., running from the project root, using a
+# monorepo tool, or packaging the shared modules).
+
+# Removed: ipfshttpclient (Context now comes via Indexer)

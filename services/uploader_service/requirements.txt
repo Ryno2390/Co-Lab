@@ -1,0 +1,29 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation
+pydantic
+
+# Environment variable loading (if service-specific config needed)
+python-dotenv
+
+# HTTP Client (for calling Announcement Service)
+httpx
+
+# Decentralized Storage Clients (for adding content)
+ipfshttpclient
+
+# Database (Needed indirectly via tokenomics.service -> tokenomics.ledger)
+# Add databases[sqlite] or databases[postgresql] etc. if direct access needed,
+# or ensure the shared tokenomics module handles its own dependencies.
+# For now, assume dependencies are handled by the shared module environment.
+# databases[sqlite]
+# SQLAlchemy
+
+# NOTE: This service also depends heavily on shared modules from the parent Co-Lab project
+# (e.g., data_layer.ipfs_client, tokenomics.service, config.settings). Ensure the
+# execution environment makes these modules importable (e.g., running from the
+# project root, using a monorepo tool, or packaging the shared modules).

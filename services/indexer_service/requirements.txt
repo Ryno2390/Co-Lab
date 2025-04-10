@@ -1,0 +1,36 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation
+pydantic
+
+# Environment variable loading (for API keys, URLs, etc.)
+python-dotenv
+
+# LLM / AI Clients (for embedding generation)
+openai
+# anthropic # Add if needed for embeddings
+
+# Vector Database Clients (for upserting)
+pinecone-client
+
+# Decentralized Storage Clients (for fetching content)
+ipfshttpclient
+
+# HTTP Client (might be needed for other interactions)
+# httpx
+
+# Keyword Search Client
+elasticsearch # For keyword indexing/search
+
+# Content Processing
+pypdf2 # For PDF text extraction
+# python-docx # Add if supporting DOCX
+
+# NOTE: This service also depends heavily on shared modules from the parent Co-Lab project
+# (e.g., data_layer clients, core_ai.routing, config.settings). Ensure the execution
+# environment makes these modules importable (e.g., running from the project root,
+# using a monorepo tool, or packaging the shared modules).

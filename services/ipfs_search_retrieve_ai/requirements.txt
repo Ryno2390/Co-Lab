@@ -1,0 +1,19 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation
+pydantic
+
+# Environment variable loading (if service-specific config needed)
+python-dotenv
+
+# HTTP Client (Needed by the imported data_layer.indexer_client)
+httpx
+
+# NOTE: This service also depends heavily on shared modules from the parent Co-Lab project
+# (e.g., data_layer.indexer_client, config.settings). Ensure the execution environment
+# makes these modules importable (e.g., running from the project root, using a
+# monorepo tool, or packaging the shared modules).

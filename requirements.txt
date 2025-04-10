@@ -1,0 +1,38 @@
+# Core Web Framework
+fastapi
+
+# ASGI Server
+uvicorn[standard]
+
+# Data validation and settings management
+pydantic
+pydantic-settings
+
+# Environment variable loading
+python-dotenv
+
+# LLM / AI Clients
+openai
+# anthropic # Add if using Claude
+
+# Vector Database Clients
+pinecone-client
+
+# HTTP Client (for API calls)
+httpx
+
+# Decentralized Storage Clients
+ipfshttpclient
+
+# Database
+databases[sqlite] # For async DB access (change to [postgresql] etc. if needed)
+SQLAlchemy # For query building and schema definition (Core)
+alembic # For database migrations
+
+# --- Testing ---
+pytest
+pytest-asyncio # For testing async code with pytest
+pytest-mock # For easy mocking with pytest fixtures
+
+# Add other dependencies below as needed
+# e.g., requests
