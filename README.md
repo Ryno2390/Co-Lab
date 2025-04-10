@@ -188,15 +188,15 @@ This section outlines how Sub-AIs find relevant information stored on IPFS.
 
 ```mermaid
 graph TD
-    %% === Node Definitions (with quoted labels for special characters) ===
+    %% === Nodes (Parentheses removed, quotes used only for spaces) ===
     User[User]
     IPFSUploader[IPFS Uploader]
-    IPFS(["IPFS Network"]) %% Use quotes inside the cylinder shape definition
-    Announcer["Announcement Service (e.g., Webhook)"] %% Quoted label
-    IndexerNode["Indexer Node(s) (Centralized)"] %% Quoted label
-    IndexDB(["Index DB(s) e.g., ES + Pinecone"]) %% Use quotes inside the cylinder shape definition
-    IndexerNodeAPI["Indexer Node API (REST/JSON)"] %% Quoted label
-    SubAI((Sub-AI)) %% Simple label, quotes not strictly needed but ("Sub-AI") is safer
+    IPFS[(IPFS Network)] %% Cylinder shape [( )]. Label has space, BUT let's try WITHOUT quotes first for [( )] shape, as [("...")] failed.
+    Announcer["Announcement Service eg Webhook"] %% Rectangle [ ]. Label has spaces -> quotes needed. Parens removed.
+    IndexerNode["Indexer Nodes Centralized"] %% Rectangle [ ]. Label has spaces -> quotes needed. Parens removed.
+    IndexDB[(Index DBs eg ES Pinecone)] %% Cylinder shape [( )]. Label has spaces -> try WITHOUT quotes first. Parens removed.
+    IndexerNodeAPI["Indexer Node API REST JSON"] %% Rectangle [ ]. Label has spaces -> quotes needed. Parens removed.
+    SubAI((Sub-AI)) %% Double circle (()). Simple label -> no quotes needed.
 
     %% === Main Flow ===
     User -- Uploads Data + Basic Metadata --> IPFSUploader
@@ -205,17 +205,17 @@ graph TD
 
     Announcer --> IndexerNode
     IndexerNode -- Retrieves Content from CID --> IPFS
-    IndexerNode -- Processes Content (Embeddings, Keywords) --> IndexDB
+    IndexerNode -- Processes Content Embeddings Keywords --> IndexDB %% Removed parens from link label too
 
     %% === Subgraph ===
     subgraph Sub-AI Querying
-        direction TB %% Optional: Enforce direction within subgraph
+        direction TB
         SubAI -- Needs Data for Task --> IndexerNodeAPI
         IndexerNodeAPI -- Forwards Query --> IndexerNode
         IndexerNode -- Queries --> IndexDB
-        IndexDB -- Returns Relevant CIDs/Snippets --> IndexerNode
-        IndexerNode -- Returns CIDs/Snippets --> IndexerNodeAPI
-        IndexerNodeAPI -- Returns CIDs/Snippets --> SubAI
+        IndexDB -- Returns Relevant CIDs Snippets --> IndexerNode %% Removed slash
+        IndexerNode -- Returns CIDs Snippets --> IndexerNodeAPI %% Removed slash
+        IndexerNodeAPI -- Returns CIDs Snippets --> SubAI %% Removed slash
         SubAI -- Retrieves Content from CIDs --> IPFS
     end
 ```
