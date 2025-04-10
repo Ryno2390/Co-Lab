@@ -274,17 +274,17 @@ This section outlines the initial approach to the Co-Lab token system for incent
 
 ```mermaid
 graph TD
-    User -- 1. Submits Prompt --> CoreAI[Core AI]
-    CoreAI -- 2. Calculates Cost --> PricingModule{Pricing Module}
-    PricingModule -- 3. Cost --> CentralLedger[(Centralized Ledger DB)]
-    CentralLedger -- 4. Check Balance & Deduct Tokens --> UserBalance{User Balance}
+    User -- 1.Submits Prompt --> CoreAI[Core AI]
+    CoreAI -- 2.Calculates Cost --> PricingModule{Pricing Module}
+    PricingModule -- 3.Cost --> CentralLedger[(Centralized Ledger DB)]
+    CentralLedger -- 4.Check Balance & Deduct Tokens --> UserBalance{User Balance}
     UserBalance -- Sufficient Funds --> CoreAI
 
-    User -- 5. Uploads Data --> IPFSUploader
+    User -- 5.Uploads Data --> IPFSUploader
     IPFSUploader -- Data + Metadata --> QualityCheck{Basic Quality Check}
     QualityCheck -- Passed --> RewardCalc{Reward Calculator}
     RewardCalc -- Reward Amount --> CentralLedger
-    CentralLedger -- 6. Credit Tokens --> UserBalance
+    CentralLedger -- 6.Credit Tokens --> UserBalance
 
     %% Future Decentralized Components (Dashed)
     style CentralLedger fill:#f9f,stroke:#333,stroke-width:2px
