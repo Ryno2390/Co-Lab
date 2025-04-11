@@ -1,0 +1,105 @@
+.
+├── .DS_Store
+├── .env
+├── .env.example
+├── .gitignore
+├── alembic
+│   ├── env.py
+│   └── script.py.mako
+├── alembic.ini
+├── api
+│   ├── main.py
+│   └── routers
+│       └── core_ai.py
+├── co-lab-mockup
+│   ├── .DS_Store
+│   ├── assets
+│   │   ├── .DS_Store
+│   │   ├── Co-Lab_Logo_Dark.png
+│   │   └── Co-Lab_Logo_Light.png
+│   ├── css
+│   │   └── style.css
+│   ├── index.html
+│   └── js
+│       └── script.js
+├── config
+│   ├── __init__.py
+│   └── settings.py
+├── core_ai
+│   ├── __init__.py
+│   ├── decomposition.py
+│   ├── models.py
+│   ├── orchestrator.py
+│   ├── routing.py
+│   └── synthesis.py
+├── data_layer
+│   ├── __init__.py
+│   ├── indexer_client.py
+│   └── ipfs_client.py
+├── file_tree.txt
+├── README.md
+├── requirements.txt
+├── services
+│   ├── .DS_Store
+│   ├── code_generator_ai
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── data_analysis_ai
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── dynamic_base_model
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── indexer_service
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   ├── processing.py
+│   │   └── requirements.txt
+│   ├── ipfs_search_retrieve_ai
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── question_answering_ai
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── summarization_ai
+│   │   ├── api.py
+│   │   ├── logic.py
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   └── uploader_service
+│       ├── api.py
+│       ├── logic.py
+│       ├── main.py
+│       └── requirements.txt
+├── sub_ai
+│   ├── __init__.py
+│   └── client.py
+├── tests
+│   ├── __init__.py
+│   ├── .DS_Store
+│   ├── core_ai
+│   │   └── test_orchestrator.py
+│   └── services
+│       ├── test_indexer_logic.py
+│       └── test_summarization_ai.py
+├── tokenomics
+│   ├── __init__.py
+│   ├── ledger.py
+│   └── service.py
+├── tree.txt
+├── ui-ux-plan.md
+└── utils
+    └── __init__.py
+
+26 directories, 77 files
