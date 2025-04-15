@@ -19,6 +19,16 @@ This stage transforms the user prompt into specific tasks for Sub-AIs.
 5.  Query Pinecone using the sub-task embedding to find the most semantically similar *fixed specialist* Sub-AI embedding(s), potentially filtering by metadata (e.g., `status='active'`).
 6.  Evaluate the similarity score against a confidence threshold to decide whether to route to a fixed specialist or trigger the dynamic instance fallback (see Section 4).
 7.  Dispatch the sub-task `instruction` to the identified fixed specialist or the dynamically configured instance.
+
+### 1.1 Enhanced Routing with Task Categorization (Transformer Squared - Pass 1)
+
+To further refine the routing process and enable more specialized execution, the system incorporates the first pass of the Transformer Squared methodology.
+
+*   **Task Identification:** Before the final routing decision (Step 6 & 7 above), the `core_ai/routing.py` module analyzes the sub-task instruction using an LLM prompt.
+*   **Categorization:** This analysis determines a specific `task_category` (e.g., 'code_generation', 'summarization', 'data_query').
+*   **Routing Decision Update:** The identified `task_category` is added to the `RoutingDecision` object alongside the potential target Sub-AI.
+*   **Purpose:** This category provides crucial context for the second pass (Model Adaptation), particularly when routing to dynamic instances, allowing for tailored model adjustments before execution (See Section 4.2).
+
 ## 2. Sub-AI Description Management
 Effective semantic routing relies on high-quality representations of Sub-AI capabilities stored in the vector database. This primarily applies to the *fixed specialist* Sub-AIs in the Hybrid model.
 *   **Description Content:** Each fixed specialist Sub-AI requires a clear, natural language description covering its purpose, key capabilities/tasks, domain keywords, and optionally inputs/outputs/limitations.
@@ -131,6 +141,20 @@ This list represents the target set of fixed specialists for the initial version
 ## 5. IPFS Data Discovery & Indexing
 This section outlines how Sub-AIs find relevant information stored on IPFS.
 **Strategy: Centralized Indexing (Initial) with Path to Decentralization**
+
+### 4.2 Dynamic Instance Enhancement with Model Adaptation (Transformer Squared - Pass 2)
+
+To improve the performance of dynamic instances on specific tasks, the system incorporates the second pass of the Transformer Squared methodology, inspired by Sakana AI's research on model merging and adaptation.
+
+*   **Goal:** Adapt the weights of the general-purpose Base Model *before* execution to specialize it for the incoming sub-task, leveraging the `task_category` identified in Pass 1 (Section 1.1).
+*   **Mechanism (Planned):** The `sub_ai/client.py` (specifically within the logic handling dynamic instance invocation) includes placeholder steps for this adaptation. The intended process involves:
+    1.  **Receive Task Category:** Obtain the `task_category` from the `RoutingDecision`.
+    2.  **Select Expert Vectors:** Based on the `task_category`, select appropriate pre-trained Singular Value Function (SVF) expert vectors (U, Σ, V) representing specialized skills.
+    3.  **Calculate Adaptation:** Compute the adaptation matrix `W'` using the formula `W' = U * (Σ ⊗ diag(z)) * V^T`, where `z` is a learnable parameter vector (potentially determined or influenced by the task category or further analysis).
+    4.  **Apply Adaptation:** Modify the Base Model's weights using `W'` (e.g., via addition or other merging techniques) *before* processing the sub-task instruction.
+*   **Current Status:** The `sub_ai/client.py` currently outlines this logic but contains **placeholder implementation** for the SVF vector loading, `z` determination, matrix calculation, and weight application. Full implementation is pending further research and development of the SVF expert vectors and adaptation mechanisms.
+*   **Benefit:** This allows dynamic instances to achieve near-specialist performance without requiring separate, fully trained models for every possible task category, enhancing the flexibility and efficiency of the hybrid approach.
+
 *   **Rationale:** Provides necessary performance and query flexibility (keyword, semantic) for the initial implementation while acknowledging the long-term goal of decentralization.
 *   **Initial Implementation Components:**
     *   **Announcement Service:** A mechanism (e.g., HTTP Webhook - see Section 9) for users/processes uploading to IPFS to announce new CIDs and associated basic metadata.
