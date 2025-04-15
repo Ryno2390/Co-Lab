@@ -1,6 +1,8 @@
 import asyncio
-from typing import Any
+from typing import Any, Optional
 import httpx # Import httpx
+import numpy as np
+# from scipy.linalg import svd # Import if/when SVD is implemented
 # Assuming RoutingDecision is defined in core_ai.routing
 # Adjust import path if structure changes
 from ..core_ai.routing import RoutingDecision
@@ -62,6 +64,60 @@ async def invoke_sub_ai(decision: RoutingDecision) -> SubAIResponse:
             timeout = DYNAMIC_TIMEOUT # Allow longer for potentially complex dynamic tasks
             print(f"Calling DYNAMIC base model at {endpoint} for task: {sub_task.sub_task_id}")
 
+            # --- Transformer Squared: Pass 2 - Model Adaptation ---
+            adapted_model_instance = None # Placeholder for the adapted model
+            if decision.task_category:
+                print(f"Task category '{decision.task_category}' detected. Attempting SVF adaptation.")
+
+                # Placeholder Step 1: Retrieve SVF Vector (z)
+                # TODO: Implement get_svf_vector function
+                # def get_svf_vector(category: str) -> Optional[np.ndarray]:
+                #     # Logic to load/fetch the pre-trained SVF vector for the category
+                #     # Example: Load from a file, database, or model registry
+                #     print(f"Placeholder: Retrieving SVF vector for category '{category}'")
+                #     # Return np.random.rand(vector_dimension) # Example return
+                #     return None # Placeholder return
+                # svf_vector_z = get_svf_vector(decision.task_category)
+                svf_vector_z = None # Placeholder value
+
+                if svf_vector_z is not None:
+                    print("Placeholder: SVF vector retrieved. Proceeding with adaptation.")
+                    # Placeholder Step 2: Apply SVF Adaptation
+                    # TODO: Implement the actual model adaptation logic
+                    # 1. Identify the target model instance (e.g., load the base model)
+                    #    target_model = load_model(endpoint or "DynamicBaseModel") # Hypothetical
+                    # 2. Identify target weight matrices (W) within the model
+                    #    target_layers = ['attention.query', 'attention.key', 'mlp.fc1'] # Example layers
+                    # 3. For each target weight matrix W:
+                    #    a. Perform SVD: U, S, Vt = svd(W, full_matrices=False) # Using scipy.linalg.svd
+                    #    b. Create diagonal matrix from SVF vector: Z_diag = np.diag(svf_vector_z)
+                    #       (Ensure dimensions match S. May need padding/truncation)
+                    #    c. Calculate adapted singular values: S_adapted = S * Z_diag # Element-wise if Z_diag is vector, or matrix mul if diagonal
+                    #    d. Reconstruct adapted weights: W_prime = U @ np.diag(S_adapted) @ Vt # Or U @ (S_adapted_matrix) @ Vt
+                    #    e. Update the model in memory with W_prime
+                    #       set_model_weight(target_model, layer_name, W_prime) # Hypothetical
+                    # adapted_model_instance = target_model # Assign the adapted model
+                    print("Placeholder: SVF adaptation applied to model weights.")
+
+                    # Placeholder Step 3: Invoke Adapted Model
+                    # The subsequent HTTP call should ideally use the adapted_model_instance
+                    # This might involve:
+                    # - A different endpoint/method for adapted models.
+                    # - Serializing adapted weights and sending them.
+                    # - Assuming the current endpoint can handle an adapted model state (if state is managed server-side).
+                    # For now, we'll just note that the call below *should* use the adapted model.
+                    print("Placeholder: Proceeding to invoke the *adapted* model.")
+
+                else:
+                    print("Placeholder: SVF vector not found or adaptation failed. Using original model.")
+            else:
+                print("No task category provided. Using original model.")
+            # --- End Model Adaptation ---
+
+            # If adaptation was successful and modified the model in memory,
+            # the existing call below might implicitly use it.
+            # If adaptation requires a different call/endpoint, modify the logic here.
+
         else:
             raise ValueError(f"Invalid route_type in decision: {decision.route_type}")
 
@@ -77,6 +133,16 @@ async def invoke_sub_ai(decision: RoutingDecision) -> SubAIResponse:
             response_content = response_data.get("content")
             status = "success"
             print(f"Successful response received from {source_id_for_response} for task {sub_task.sub_task_id}")
+
+            # --- Transformer Squared: Post-Inference ---
+            # Placeholder Step 4: Revert Weights (Optional)
+            # If the adaptation was temporary for this request, revert weights here.
+            # TODO: Implement weight reversion if needed
+            # if adapted_model_instance and svf_vector_z is not None:
+            #     print("Placeholder: Reverting model weights to original state.")
+            #     # Logic to restore original weights to the model instance
+            # --- End Post-Inference ---
+
         # --- End HTTP call ---
 
     except httpx.HTTPStatusError as e:
